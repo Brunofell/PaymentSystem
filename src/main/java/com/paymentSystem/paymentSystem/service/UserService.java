@@ -1,5 +1,6 @@
 package com.paymentSystem.paymentSystem.service;
 
+import com.paymentSystem.paymentSystem.dto.UserResponse;
 import com.paymentSystem.paymentSystem.entity.User;
 import com.paymentSystem.paymentSystem.repository.UserRepository;
 import com.paymentSystem.paymentSystem.utils.RandomString;
@@ -21,7 +22,7 @@ public class UserService {
     }
 
 
-    public User userRegister(User user){
+    public UserResponse userRegister(User user){
         if(repository.findByEmail(user.getEmail()) != null){
             throw new RuntimeException("This email already exists ;-;");
         }
@@ -30,10 +31,11 @@ public class UserService {
 
         String randomCode = RandomString.generateRandonString(64);
         user.setVerificationCode(randomCode);
-        user.setEnabled(false);
+        user.setEnabled(true);
 
         User savedUser = repository.save(user);
-        return savedUser;
+        UserResponse userResponse = new UserResponse(savedUser.getId(), savedUser.getName(), savedUser.getEmail(), savedUser.getPassword());
+        return userResponse;
 
     }
 }
