@@ -1,9 +1,5 @@
 package com.paymentSystem.paymentSystem.dto;
 
-import com.paymentSystem.paymentSystem.entity.User;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 public record UserResponse (
         Long id,
         String name,

@@ -1,6 +1,6 @@
 package com.paymentSystem.paymentSystem.configurations;
 
-import com.paymentSystem.paymentSystem.repository.UserRepository;
+import com.paymentSystem.paymentSystem.repository.ClientRepository;
 import com.paymentSystem.paymentSystem.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,7 +20,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private TokenService tokenService;
     @Autowired
-    private UserRepository repository;
+    private ClientRepository repository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

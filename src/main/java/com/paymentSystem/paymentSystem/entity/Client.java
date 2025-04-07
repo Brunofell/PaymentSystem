@@ -12,8 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "usuarios")
-public class User implements UserDetails {
+@Table(name = "clientes")
+public class Client implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private String verificationCode;
     private boolean enabled;
 
-    public User(Long id, String name, String email, String password, String verificationCode, Boolean enabled){
+    public Client(Long id, String name, String email, String password, String verificationCode, Boolean enabled){
         this.id = id;
         this.name = name;
         this.email = email;
@@ -32,14 +32,14 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public User(String name, String email, String password){
+    public Client(String name, String email, String password){
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
 
-    public User(){}
+    public Client(){}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

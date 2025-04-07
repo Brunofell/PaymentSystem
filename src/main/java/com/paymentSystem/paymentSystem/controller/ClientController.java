@@ -4,11 +4,12 @@ import com.paymentSystem.paymentSystem.dto.AuthenticationRequest;
 import com.paymentSystem.paymentSystem.dto.AuthenticationResponse;
 import com.paymentSystem.paymentSystem.dto.UserRequest;
 import com.paymentSystem.paymentSystem.dto.UserResponse;
-import com.paymentSystem.paymentSystem.entity.User;
+import com.paymentSystem.paymentSystem.entity.Client;
 import com.paymentSystem.paymentSystem.service.TokenService;
-import com.paymentSystem.paymentSystem.service.UserService;
+import com.paymentSystem.paymentSystem.service.ClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/client")
+public class ClientController {
     @Autowired
-    private UserService service;
+    private ClientService service;
     @Autowired
     private TokenService tokenService;
     @Autowired
@@ -28,12 +29,12 @@ public class UserController {
 
     @PostMapping("/post")
     public ResponseEntity<UserResponse> userResgister(@RequestBody @Valid UserRequest userRequest){
-        User user = userRequest.toModel();
-        return ResponseEntity.ok().body(service.userRegister(user));
+        Client client = userRequest.toModel();
+        return ResponseEntity.ok().body(service.userRegister(client));
     }
 
     @GetMapping("/get")
-    public List<User> getAllUsers() {
+    public List<Client> getAllUsers() {
         return service.getAllUsers();
     }
 
@@ -44,8 +45,29 @@ public class UserController {
         );
 
         var auth = authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken( (User) auth.getPrincipal());
+        var token = tokenService.generateToken( (Client) auth.getPrincipal());
         return ResponseEntity.ok(new AuthenticationResponse(token));
     }
 
+    @GetMapping("/verify")
+    public String verifyUser(@Param("code") String code){
+        if(service.verify(code)){
+            return "verify_success";
+        }else{
+            return "verify_fail";
+        }
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

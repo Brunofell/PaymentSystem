@@ -4,24 +4,23 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.paymentSystem.paymentSystem.entity.User;
+import com.paymentSystem.paymentSystem.entity.Client;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
 
 @Service
 public class TokenService {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String generateToken(User user){
+    public String generateToken(Client client){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            String token = JWT.create().withIssuer("auth").withSubject(user.getEmail()).withExpiresAt(ExpirationDate()).sign(algorithm);
+            String token = JWT.create().withIssuer("auth").withSubject(client.getEmail()).withExpiresAt(ExpirationDate()).sign(algorithm);
             return token;
         }catch (JWTCreationException e){
             throw new RuntimeException("ERROR: FAILED TO GENERATE TOKEN. ", e);

@@ -1,7 +1,6 @@
 package com.paymentSystem.paymentSystem.dto;
 
-import com.paymentSystem.paymentSystem.entity.User;
-import jakarta.validation.constraints.Email;
+import com.paymentSystem.paymentSystem.entity.Client;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,7 +15,7 @@ public record UserRequest (
         @NotBlank(message = "Password cannot be blank.")
         String password
 ){
-    public User toModel(){
-        return new User(name, email, password);
+    public Client toModel(){
+        return new Client(name, email, password);
     }
 }
